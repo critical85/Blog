@@ -17,7 +17,7 @@
         <form method="post">
             <div class="card mx-auto" style="max-width: 550px; margin-bottom:20px">
                 <div class="card-header">
-                    <input name="post-id" readonly value=<?php echo $post[$post_id_key] ?>>
+                    <input style="display:none" name="post-id" readonly value=<?php echo $post[$post_id_key] ?>>
                     <h5><?php echo $post[$post_head_key] ?></h5>
                 </div>
                 <div class="card-body">

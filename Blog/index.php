@@ -40,16 +40,26 @@ include "controls/login_control.php";
 
     <div class="">
         <?php foreach($all_posts as $post){ ?>
-            <div class="card mx-auto" style="max-width: 550px; margin-bottom:20px">
-                <div class="card-header">
-                    <h5><?php echo $post[$post_head_key] ?></h5>
+            <form method="post">
+
+                <div class="card mx-auto" style="max-width: 550px; margin-bottom:20px">
+                    <div class="card-header">
+                        <input style="display:none" name="post-id" readonly value=<?php echo $post[$post_id_key] ?>>
+                        <h5><?php echo $post[$post_head_key] ?></h5>
+                    </div>
+                    <div class="card-body">
+                        <p><?php echo $post[$post_body_key] ?></p>
+                        <footer class="blockquote-footer"><?php echo $post[$post_user_key] ?>
+                            <cite title="Source Title"><?php echo $post[$post_timestamp_key] ?></cite></footer>
+                        
+                        <?php if(isset($_SESSION['user_access'])){
+                                  if($_SESSION['user_access'] > 5){ ?>
+                            <button type="submit" name="delete-post">Delete</button>
+                        <?php }} ?>
+
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p><?php echo $post[$post_body_key] ?></p>
-                    <footer class="blockquote-footer"><?php echo $post[$post_user_key] ?>
-                        <cite title="Source Title"><?php echo $post[$post_timestamp_key] ?></cite></footer>
-                </div>
-            </div>
+            </form>
         <?php } ?>
     </div>
 </div>

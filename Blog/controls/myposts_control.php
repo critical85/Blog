@@ -8,18 +8,22 @@
     $post_head_key = "head";
     $post_body_key = "body";
 
+    $filter = "";
+    $sorted_by = ["birth"];
+    $order = "DESC";
+
     $_SESSION['post_id'] = "";
 
-    // get all users post to print them out
+    // get users posts to print them out
     $username_value = $_SESSION['user_username'];
     $filter = ["$post_user_key"=>"$username_value"];
-    $all_posts = select_SQL($table, $filter);
+    $all_posts = select_SQL($table, $filter, $sorted_by, $order);
 
     if(isset($_POST['delete-post'])){
         $post_id_value = $_POST['post-id'];
         $id = ["$post_id_key"=>"$post_id_value"];
         delete_SQL($table, $id);
-        $all_posts = select_SQL($table, $filter);
+        $all_posts = select_SQL($table, $filter, $sorted_by, $order);
     }
 
     if(isset($_POST['edit-post'])){

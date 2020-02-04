@@ -6,6 +6,10 @@
 
     $errors = array('user_name'=>'', 'password'=>'');
 
+    $filter = "";
+    $sorted_by = "";
+    $order = "DESC";
+
     if(isset($_POST['login'])){
 
         // check format of inputs
@@ -13,17 +17,17 @@
                         
             // create variable username
             $user_name_value = $_POST['user-name-login'];
-            $user_name = ["$user_name_key"=>"$user_name_value"];
+            $filter = ["$user_name_key"=>"$user_name_value"];
 
             // check if username exists
-            if(select_SQL($table, $user_name)){
+            if(select_SQL($table, $filter, $sorted_by)){
 
                 // create variable user (username, password)
                 $user_password_value = $_POST['password-login'];
-                $user = ["$user_name_key"=>"$user_name_value", "$user_password_key"=>"$user_password_value"];
+                $filter = ["$user_name_key"=>"$user_name_value", "$user_password_key"=>"$user_password_value"];
 
                 // check if user match password
-                if($logged_user = select_SQL($table, $user)){
+                if($logged_user = select_SQL($table, $filter, $sorted_by)){
 
                     // save user as logged
                     $_SESSION['user_id'] = $logged_user[0]['id'];

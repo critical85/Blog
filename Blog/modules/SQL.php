@@ -2,6 +2,12 @@
 
     include('config/db_connection.php');
 
+// parametr formats:    $table:     STRING
+//                      $input:     ASSOC ARRAY
+//                      $filter:    ASSOC ARRAY
+//                      $sorted_by: ARRAY
+//                      $id: ASSOC: ARRAY
+//                      $order:     STRING (optional)
 
 // fuctions for SQL queries
 // ************************************************************************** //
@@ -38,19 +44,12 @@
     }
 
 // ************************************************************************** //
-    function select_SQL($table, $filter=[]){
+    function select_SQL($table, $filter, $sorted_by, $order='ASC'){
         global $pdo;
         $sql = "SELECT * FROM $table";
 
-        // if there is no filter, return whole table
-        if(empty($filter)){
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            return $result;
-        }
-        // if there is a filter 
-        else{
+        // if there is a filter
+        if(!empty($filter)){
             $i = 0;
             foreach($filter as $key=>$value){
                 // for first filter put WHERE and 
@@ -62,15 +61,24 @@
                 else{
                     $sql = $sql . " AND $key = '$value'";
                 }
-            }
-
-            // run the query
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
-            // put results in variable
-            $result = $stmt->fetchAll();
-            return $result;
+            }            
         }
+
+        // if there is a sorting parametr
+        if(!empty($sorted_by)){
+            $sql = $sql . " ORDER BY";
+            foreach($sorted_by as $key){
+                $sql = $sql . " $key";
+            }
+            $sql = $sql . " $order";
+        }
+
+        // run the query
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        // put results in variable
+        $result = $stmt->fetchAll();
+        return $result;
     }
 
 

@@ -6,6 +6,9 @@
 
     $errors = array('user_name'=>'', 'password'=>'', 'password_re'=>'');
 
+    $filter = "";
+    $sorted_by = "";
+
     if(isset($_POST['sign-in-submit'])){
 
         // check format of inputs
@@ -13,10 +16,10 @@
 
             // create variable username
             $user_name_value = $_POST['user-name-signin'];
-            $user_name = ["$user_name_key"=>"$user_name_value"];
+            $filter = ["$user_name_key"=>"$user_name_value"];
 
             // check if username exists
-            if(select_SQL($table, $user_name)){
+            if(select_SQL($table, $filter, $sorted_by)){
                 $errors['user_name'] = "Username is taken";
             } 
             else{

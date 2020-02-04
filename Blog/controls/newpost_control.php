@@ -8,13 +8,17 @@
     $post_head_key = "head";
     $post_body_key = "body";
 
+    $filter = "";
+    $sorted_by = "";
+    $order = "DESC";
+
     $errors = ['head'=>'', 'body'=>''];
 
     // if there is an id we are in EDIT mode
     if(isset($_SESSION['post_id'])){
         $post_id_value = $_SESSION['post_id'];
-        $id = ["$post_id_key"=>"$post_id_value"];
-        $post = select_SQL($table, $id);
+        $filter = ["$post_id_key"=>"$post_id_value"];
+        $post = select_SQL($table, $filter, $sorted_by, $order);
         //print_array($post);
     }
 
@@ -34,6 +38,7 @@
             
             // insert new post
             insert_SQL($table, $new_post);
+            header("location: myposts.php");
         }
     }
 
