@@ -1,3 +1,4 @@
 # Blog
 
-before changing SQL query module => select_SQL function => adding sorting oprtions
+Final version.
+Header (big "BLOG" on top) serves as "Home" button from any place
